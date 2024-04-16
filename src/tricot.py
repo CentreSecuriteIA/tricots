@@ -103,7 +103,7 @@ def new_log_file(path: str = None):
         path = f"logs/{time.strftime('%Y-%m-%d_%H-%M-%S')}.log"
 
     logger = logging.getLogger("TRICOT")
-    logger.setLevel(logging.info)
+    logger.setLevel(logging.INFO)
     while logger.hasHandlers():
         logger.removeHandler(logger.handlers[0])
     logger.addHandler(logging.FileHandler(path))

@@ -43,7 +43,7 @@ tricot.patch_openai(edit_call)
 for task in tasks:
     # 3. We set the log file to use for this task.
     tricot.new_log_file(f"logs/{task}.log")
-    # 4. We run the agent as usual.
+    # 4. We run the agent as usual. Somewhere in its code, it will call the (now patched) openai api.
     agent.run(task)
 ```
 
