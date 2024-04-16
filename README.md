@@ -57,8 +57,8 @@ Running this script with an otherwise defined agent will create three log files,
 ### Structure of the log files
 
 The log files are in the [jsonlines](http://jsonlines.org/) format, with one json-encoded API call per line. Each API call is a dictionary with the following structure:
-```json
-// One line of the log file = one API call
+```python
+# One line of the log file = one API call
 {
     "timestamp": "2021-09-01T12:34:56.789012",
     "messages": [
