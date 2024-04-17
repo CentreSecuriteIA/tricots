@@ -39,6 +39,7 @@ import json
 import time
 import logging
 from functools import partial
+from copy import deepcopy
 
 import openai
 from typing import Callable
@@ -61,6 +62,7 @@ def create_and_log(
     **kwargs,
 ):
     if edit_call is not None:
+        messages = deepcopy(messages)
         messages = edit_call(messages)
 
     logger = logging.getLogger("TRICOT")
