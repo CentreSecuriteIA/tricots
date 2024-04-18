@@ -1,10 +1,11 @@
 # TRICOT: Trace Interception and Collection Tool
 
-TRICOT is a simple single-file tool to monitor and edit the messages sent to the openai api using [monkey-patching](https://en.wikipedia.org/wiki/Monkey_patch).
-
 TRICOT is meant to collect traces of LLM-agents and scaffoldings and to alter their behavior without needing to modify nor understand the codebase of the agent.
 
-TRICOT was developped to enable monitoring as part of BELLS: Benchmarks for the Evaluation of LLM Supervisors.
+TRICOT is a simple single-file tool to monitor and edit the messages sent to the OpenAI API using [monkey-patching](https://en.wikipedia.org/wiki/Monkey_patch).
+(a technique used to dynamically update the behavior of a piece of code at run-time, without altering the source code)
+
+TRICOT was developed to enable monitoring as part of [BELLS: Benchmarks for the Evaluation of LLM Supervisors.](https://github.com/CentreSecuriteIA/BELLS)
 
 ## Installation
 
@@ -14,12 +15,12 @@ You can install and use TRICOT in one of two ways in a python 3.9+ environment:
 
 ## Usage
 
-This single file module is a monkey-patch for the openai api that enables:
-- Logging of all calls to the openai api
-- Modification of the messages sent to the api before sending them
+This single file module is a monkey-patch for the OpenAI API that enables:
+- Logging of all calls to the OpenAI API
+- Modification of the messages sent to the API before sending them
 
 TRICOT contains two main functions:
-- `patch_openai(edit_call)`: Patches the openai api to add logging, with an optional function to edit the list of messages before sending them.
+- `patch_openai(edit_call)`: Patches the OpenAI API to add logging, with an optional function to edit the list of messages before sending them.
 - `new_log_file(path)`: Sets the log file to use, should be before each individual run of the LLM-app to monitor.
 
 ### Example: Logging multiple runs of an agent while modifying the system prompt
@@ -36,14 +37,14 @@ def edit_call(messages: list[dict]):
     messages[0]['content'] += "\n\nImportant: always answer in French."
     return messages
 
-# 2. We monkey-patch the openai api (= modify on the fly the libraries of openai library)
+# 2. We monkey-patch the OpenAI API (= modify on the fly the libraries of OpenAI library)
 # This allows to edit the messages before sending them and once a log file is set, logging them to a file.
 tricot.patch_openai(edit_call)
 
 for task in tasks:
     # 3. We set the log file to use for this task.
     tricot.new_log_file(f"logs/{task}.log")
-    # 4. We run the agent as usual. Somewhere in its code, it will call the (now patched) openai api.
+    # 4. We run the agent as usual. Somewhere in its code, it will call the (now patched) OpenAI API.
     agent.run(task)
 ```
 
@@ -53,11 +54,11 @@ This example shows the main features of TRICOT:
 3. The `new_log_file` function should be called at least once, and before each independent run of the LLM-app/agent. It tells TRICOT where to start logging the (possibly edited) messages. If not called, TRICOT will only edit the messages.
 4. The agent can be run as usual, without any modification to its codebase.
 
-Running this script with an otherwise defined agent will create three log files, `logs/task1.log`, `logs/task2.log`, and `logs/task3.log`, with the messages sent to the openai api, modified to ask the model to always answer in French.
+Running this script with an otherwise defined agent will create three log files, `logs/task1.log`, `logs/task2.log`, and `logs/task3.log`, with the messages sent to the OpenAI API, modified to ask the model to always answer in French.
 
 ### Structure of the log files
 
-The log files are in the [jsonlines](http://jsonlines.org/) format, with one json-encoded API call per line. Each API call is a dictionary with the following structure:
+The log files are in the [jsonlines](http://jsonlines.org/) format, with one JSON-encoded API call per line. Each API call is a dictionary with the following structure:
 ```python
 # One line of the log file = one API call
 {
@@ -76,7 +77,7 @@ The last message in the `messages` field will always be the answer given by the 
 
 #### Example of a log file
 
-We provide a simple example of a log file, assuming tricot was used to monitor a simple chat app, in which the convarsation was:
+We provide a simple example of a log file, assuming tricot was used to monitor a simple chat app, in which the conversation was:
 - System: "Always speak in French."
 - Assistant: "Bonjour!"
 - User: "What is the CeSIA?"
@@ -98,7 +99,7 @@ TRICOT is a simple tool with a few limitations, but should be easy to extend to 
 - It works only with the OpenAI API (albeit all versions of it)
 - It requires the agent to be written in Python and that it is possible to add tricot to the runtime.
 - It requires that the agent can be imported and run as a function call, i.e. it would not work with agents that can only be run from the command line...
-    - ... in this case, TRICOT can still be used by editing the code of the agent to call the pathing function, anytime before running.
+    - ... in this case, TRICOT can still be used by editing the code of the agent to call the patching function, anytime before running.
 
 ## Future work
 
@@ -114,4 +115,4 @@ Those features might be implemented as we need them for the development of BELLS
 
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
-TRICOT was developped by Diego Dorn, as part of the BELLS project, for the CeSIA — Centre pour la Sécurité de l'IA.
+TRICOT was developed by Diego Dorn, as part of the [BELLS project](https://github.com/CentreSecuriteIA/BELLS), for the [CeSIA — Centre pour la Sécurité de l'IA](https://www.securite-ia.fr/).
