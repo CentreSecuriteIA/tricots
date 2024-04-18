@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "tricot"
+name = "tricots"
 version = "0.1.0"
 description = "Trace Interception and Collection Tool"
 authors = ["Diego Dorn"]

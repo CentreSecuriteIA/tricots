@@ -1,11 +1,11 @@
 """
-TRICOT: Trace Interception and Collection Tool
+TRICOTS: Trace Interception and Collection Tool for Supervision
 
 This single file module is a monkey-patch for the openai api that enables:
 - Logging of all calls to the openai api
 - Modification of the messages sent to the api before sending them
 
-TRICOT contains two main functions:
+TRICOTS contains two main functions:
 - `patch_openai(edit_call)`: Patches the openai api to add logging, with an optional function to edit the list of messages before sending them.
 - `new_log_file(path)`: Sets the log file to use, should be before each individual run of the LLM-app to monitor.
 
@@ -65,7 +65,7 @@ def create_and_log(
         messages = deepcopy(messages)
         messages = edit_call(messages)
 
-    logger = logging.getLogger("TRICOT")
+    logger = logging.getLogger("TRICOTS")
     now = time.time()
 
     response = original_chat_completion_create(messages=messages, **kwargs)
@@ -104,7 +104,7 @@ def new_log_file(path: str = None):
     if path is None:
         path = f"logs/{time.strftime('%Y-%m-%d_%H-%M-%S')}.log"
 
-    logger = logging.getLogger("TRICOT")
+    logger = logging.getLogger("TRICOTS")
     logger.setLevel(logging.INFO)
     while logger.hasHandlers():
         logger.removeHandler(logger.handlers[0])
