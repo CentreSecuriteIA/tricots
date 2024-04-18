@@ -89,7 +89,7 @@ We provide a simple example of a log file, assuming tricot was used to monitor a
 {"timestamp": 20.0, "messages": [{"role": "system", "content": "Always answer in French."}, {"role": "assistant", "content": "Bonjour!"}, {"role": "user", "content": "What is the CeSIA?"}, {"role": "assistant", "content": "Le CeSIA est le Centre pour la Sécurité de l'IA."}]}
 ```
 
-There are two lines, because there are two API calls needed to for the two responses of the Assistant.
+There are two lines, because there are two API calls needed to for the two responses of the Assistant. The `"messages"` field contains the messages as sent to the API, with the different keys as specified by [the OpenAI API](https://platform.openai.com/docs/api-reference/chat/create#chat-create-messages)
 The last message of a line is always the output of the API, which is the answer of the model.
 Furthermore, in basic chat apps, all the previous messages are always sent to the API so that the LLM has the context of the conversation, which is why the first two messages are repeated here.
 
