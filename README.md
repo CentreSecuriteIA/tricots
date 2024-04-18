@@ -10,8 +10,8 @@ TRICOTS was developed to enable monitoring as part of [BELLS: Benchmarks for the
 ## Installation
 
 You can install and use TRICOTS in one of two ways in a python 3.9+ environment:
-- Copy the [`tricot.py`](./src/tricot.py) file into your project and import it. That's it.
-- OR Install it using pip: `pip install git+https://github.com/ddorn/tricot.git`
+- Copy the [`tricots.py`](./src/tricots.py) file into your project and import it. That's it.
+- OR Install it using pip: `pip install git+https://github.com/ddorn/tricots.git`
 
 ## Usage
 
@@ -26,7 +26,7 @@ TRICOTS contains two main functions:
 ### Example: Logging multiple runs of an agent while modifying the system prompt
 
 ```python
-import tricot
+import tricots
 
 agent = ...
 tasks = ["task1", "task2", "task3"]
@@ -39,11 +39,11 @@ def edit_call(messages: list[dict]):
 
 # 2. We monkey-patch the OpenAI API (= modify on the fly the libraries of OpenAI library)
 # This allows to edit the messages before sending them and once a log file is set, logging them to a file.
-tricot.patch_openai(edit_call)
+tricots.patch_openai(edit_call)
 
 for task in tasks:
     # 3. We set the log file to use for this task.
-    tricot.new_log_file(f"logs/{task}.log")
+    tricots.new_log_file(f"logs/{task}.log")
     # 4. We run the agent as usual. Somewhere in its code, it will call the (now patched) OpenAI API.
     agent.run(task)
 ```
@@ -77,7 +77,7 @@ The last message in the `messages` field will always be the answer given by the 
 
 #### Example of a log file
 
-We provide a simple example of a log file, assuming tricot was used to monitor a simple chat app, in which the conversation was:
+We provide a simple example of a log file, assuming TRICOTS was used to monitor a simple chat app, in which the conversation was:
 - System: "Always speak in French."
 - Assistant: "Bonjour!"
 - User: "What is the CeSIA?"
@@ -97,7 +97,7 @@ Furthermore, in basic chat apps, all the previous messages are always sent to th
 
 TRICOTS is a simple tool with a few limitations, but should be easy to extend to fit your needs:
 - It works only with the OpenAI API (albeit all versions of it)
-- It requires the agent to be written in Python and that it is possible to add tricot to the runtime.
+- It requires the agent to be written in Python and that it is possible to add TRICOTS to the runtime.
 - It requires that the agent can be imported and run as a function call, i.e. it would not work with agents that can only be run from the command line...
     - ... in this case, TRICOTS can still be used by editing the code of the agent to call the patching function, anytime before running.
 
