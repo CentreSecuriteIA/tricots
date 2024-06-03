@@ -11,7 +11,7 @@ TRICOTS was developed to enable monitoring as part of [BELLS: Benchmarks for the
 
 You can install and use TRICOTS in one of two ways in a python 3.9+ environment:
 - Copy the [`tricots.py`](./src/tricots.py) file into your project and import it. That's it.
-- OR Install it using pip: `pip install git+https://github.com/ddorn/tricots.git`
+- OR Install it using pip: `pip install tricots`
 
 ## Usage
 
