@@ -13,3 +13,8 @@ repos:
         args:
         - --line-length
         - "100"
+
+ci:
+    autofix_prs: true
+    autoupdate_schedule: quarterly
+    autoupdate_commit_msg: "chore: pre-commit autoupdate"
